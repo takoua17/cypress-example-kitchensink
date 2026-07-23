@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    "module": "commonjs",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "rootDir": "./src" 
+  },
+  "ts-node": {
+    "transpileOnly": true
+  }
+}
