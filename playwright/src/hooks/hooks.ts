@@ -32,12 +32,11 @@ Before(async function () {
   // that can be accessed in step definitions files
 });
 
-// Run after each scenario to close the page and context, and capture a screenshot if the scenario fails
+// Run after each scenario to close the page and context, and attach a screenshot only when the scenario fails
 After(async function ({ result, pickle }) {
   // Capture a screenshot only when the scenario fails
   if (result?.status === Status.FAILED) {
     const img = await pageFixture.page.screenshot({
-      path: `./rapports/screenshot/${pickle.name}.png`, // save the screenshot with the scenario name in rapports/screenshot folder
       type: "png",
     });
     await this.attach(img, "image/png");
