@@ -12,6 +12,6 @@ module.exports = {
       resultsDir: 'allure-results', // store allure result in json file
       snippetInterface: 'async-await',
     },
-    tags: "@AddingASingleTodo", 
+    tags: "@AddingTodoWithWhitespaceInMiddle", 
   },
 };

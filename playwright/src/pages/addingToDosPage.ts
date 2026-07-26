@@ -16,14 +16,19 @@ export class addingToDosPage {
   }
   // Methode to navigate to the home page
   async navigateToHomePage() {
-    await this.page.goto("/todo#/");
+  await this.page.goto("/todo#/");
+  await this.page.evaluate(() => localStorage.clear());
+  await this.page.reload();
 
-    await this.page.evaluate(() => {
-      localStorage.clear();
-      window.location.reload();
-    });
-
+  // Remove any default/seeded todos injected by the app after reload
+  const count = await this.todoList.count();
+  for (let i = 0; i < count; i++) {
+    const firstItem = this.todoList.first();
+    await firstItem.hover();
+    await firstItem.locator(".destroy").click();
   }
+}
+  
 
   // Method to add a new todo item
   async addTodo(todoText: string) {
@@ -49,4 +54,18 @@ export class addingToDosPage {
   generateLongText(length: number = 225): string {
     return "a".repeat(length);
   }
+
+  // Method to click outside the input field
+  async clickOutsideInputField() {
+    await this.inputField.blur(); 
+  }
+
+ // Method to click on the input field
+async ClickOnInputField() {
+  await this.inputField.click();
+}
+
+
+
+
 }

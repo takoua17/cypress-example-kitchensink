@@ -39,3 +39,30 @@ Then("the input field is empty", async function () {
 Then("the todo counter should show {string}", async function (counterText) {
   expect(await addingToDos.getTodoCounterText()).toBe(counterText);
 });
+
+// Click outside the input field
+When('I click outside the input field', async function () {
+  await addingToDos.clickOutsideInputField();
+});
+
+// Click on the input field
+When('I click on the input field', async function () {
+  await addingToDos.ClickOnInputField();
+});
+// Verify that no todo is added to the list
+Then('no todo should be added to the list', async function () {
+  const todoCount = await addingToDos.todoList.count();
+  expect(todoCount).toBe(0);
+});
+Then('both todos {string} should appear in the list as two separate entries', async function (todo) {
+  const todos = await addingToDos.todoList.filter({ hasText: todo });
+  expect(await todos.count()).toBe(2);
+});
+
+When('I double click on the todo {string}', async function (string) {
+  
+});
+
+Then('the edit input field should contain {string}', async function (string) {
+  
+});
