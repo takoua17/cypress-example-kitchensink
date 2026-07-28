@@ -20,13 +20,14 @@ as a user i want to add todos to the list
       | A                         | single character (min) |
       | LONG_TEXT_225             | long text (225 chars)  |
 
-  @AddingSingleTodoWithClickOutside
-  Scenario: Add a todo by clicking outside the input field
+  @ShouldNotAddSingleTodoWithClickOutside
+  # This test scenario is expected to fail (confirmed bug - Bug Ticket N°1)
+  Scenario:  A todo should not be added by blurring the input (without pressing Enter)
     When I type "Walk the dog" into the input field
     And I click outside the input field
-    Then the todo "Walk the dog" should appear in the list
-    And the input field is empty
-    And the todo counter should show "1"
+    Then the todo "Walk the dog" should not appear in the list
+    And the input field should still contain "Walk the dog"
+    And the todo counter should show "0"
 
   @AddingmultipleTodos
   Scenario: Add multiple todos and display them correctly
@@ -54,11 +55,9 @@ as a user i want to add todos to the list
     Then both todos "Go to the GYM" should appear in the list as two separate entries
     And the todo counter should show "2"
 
-  @AddingTodoWithWhitespaceInMiddle
-  Scenario: Whitespace is preserved internally when editing a todo
-    When I type "Walking    the   dog" into the input field
+  @AddingTodoWithWhitespace
+  Scenario: Trim whitespace from a new todo
+    When I type "   Todo with spaces   " into the input field
     And I press Enter
-    Then the todo "Walking    the   dog" should appear in the list
+    Then the todo "Todo with spaces" should appear in the list
     And the todo counter should show "1"
-    When I double click on the todo "Walking    the   dog"
-    Then the edit input field should contain "Walking    the   dog"

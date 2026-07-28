@@ -11,24 +11,30 @@ export class addingToDosPage {
   constructor(page: Page) {
     this.page = page;
     this.inputField = page.locator('[data-test="new-todo"]');
-    this.todoList = page.locator('.todo-list li');
+    this.todoList = page.locator(".todo-list li");
     this.todoCounter = page.locator(".todo-count strong");
   }
   // Methode to navigate to the home page
   async navigateToHomePage() {
-  await this.page.goto("/todo#/");
-  await this.page.evaluate(() => localStorage.clear());
-  await this.page.reload();
+    await this.page.goto("/todo#/");
 
-  // Remove any default/seeded todos injected by the app after reload
-  const count = await this.todoList.count();
-  for (let i = 0; i < count; i++) {
-    const firstItem = this.todoList.first();
-    await firstItem.hover();
-    await firstItem.locator(".destroy").click();
+    // Clear localStorage to remove any previously saved todos
+    await this.page.evaluate(() => localStorage.clear());
+
+    //Reload the page so the app reflects the cleared localStorage
+    await this.page.reload();
+
+    // Remove any default todos injected by the app after reload
+    const count = await this.todoList.count();
+    for (let i = 0; i < count; i++) {
+      //Always target the first remaining item
+      const firstItem = this.todoList.first();
+      //Hover is required to reveal the delete button
+      await firstItem.hover();
+      // Click the delete button to remove this default todo
+      await firstItem.locator(".destroy").click();
+    }
   }
-}
-  
 
   // Method to add a new todo item
   async addTodo(todoText: string) {
@@ -38,11 +44,6 @@ export class addingToDosPage {
   // Method to press Enter
   async pressEnter() {
     await this.inputField.press("Enter");
-  }
-
-  // Method to get the text of the todo item
-  async getTodoText(): Promise<string> {
-    return (await this.todoList.first().textContent()) || "";
   }
 
   // Method to get the todo counter text
@@ -55,17 +56,14 @@ export class addingToDosPage {
     return "a".repeat(length);
   }
 
-  // Method to click outside the input field
+  // Simulate a real user click outside the input field, at a neutral
+  // area of the page (top-left corner), to trigger a blur event
   async clickOutsideInputField() {
-    await this.inputField.blur(); 
+    await this.page.mouse.click(0, 0);
   }
 
- // Method to click on the input field
-async ClickOnInputField() {
-  await this.inputField.click();
-}
-
-
-
-
+  // Method to click on the input field
+  async ClickOnInputField() {
+    await this.inputField.click();
+  }
 }

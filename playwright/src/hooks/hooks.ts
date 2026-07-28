@@ -19,7 +19,7 @@ setDefaultTimeout(30_000); // Set default timeout for Cucumber steps to 30 secon
 
 // execute before all tests to launch the browser
 BeforeAll(async function () {
-  browser = await chromium.launch({ headless: false });
+  browser = await chromium.launch({ headless: false});
 });
 
 //Run before each scenario to create a new browser context and page instance
