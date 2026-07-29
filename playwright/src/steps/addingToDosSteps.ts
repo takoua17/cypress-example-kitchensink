@@ -11,6 +11,8 @@ Given("I navigate to the todo Application", async function () {
   // navigate to the home page
   await  pageFixture.addingToDos.navigateToHomePage();
 });
+
+// ************TC-01-02-03-04: Add a valid todo and display it correctly
 // adding a new todo item
 When("I type {string} into the input field", async function (todotext) {
   // check if the input text is "LONG_TEXT_225" and generate 
@@ -41,6 +43,7 @@ Then("the todo counter should show {string}", async function (counterText) {
   expect(await  pageFixture.addingToDos.getTodoCounterText()).toBe(counterText);
 });
 
+// ************TC-05: A todo should not be added by blurring the input (without pressing Enter)
 // Click outside the input field
 When('I click outside the input field', async function () {
   await  pageFixture.addingToDos.clickOutsideInputField();
@@ -55,6 +58,11 @@ Then("the input field should still contain {string}", async function (inputText:
   await expect( pageFixture.addingToDos.inputField).toHaveValue(inputText);
 });
 
+
+//************TC-06: ddingmultipleTodos: Add multiple todos and display them correctly
+//No new steps needed here : reuses steps already defined above
+
+//************TC-07: A todo should not be added when the input field is empty
 // Click on the input field
 When('I click on the input field', async function () {
   await  pageFixture.addingToDos.ClickOnInputField();
@@ -64,8 +72,17 @@ Then('no todo should be added to the list', async function () {
   const todoCount = await  pageFixture.addingToDos.todoList.count();
   expect(todoCount).toBe(0);
 });
+
+
+//************TC-08: Add a duplicate todo
+// verifying that two todos with the same text appear as separate entries
 Then('both todos {string} should appear in the list as two separate entries', async function (todo) {
   const todos = await  pageFixture.addingToDos.todoList.filter({ hasText: todo });
   expect(await todos.count()).toBe(2);
 });
+
+
+
+// ************TC-09: Trim whitespace from a new todo
+//No new steps needed here :reuses steps already defined above
 

@@ -5,6 +5,8 @@ import { Page } from "@playwright/test";
 import { addingToDosPage } from "../pages/addingToDosPage";
 import { DeletingToDosPage } from "../pages/deletingToDosPage";
 import { EditingToDosPage } from "../pages/editingToDosPage";
+import { MarkingTodosPage } from "../pages/markingToDosAsComAndIncompletePage";
+
 export const pageFixture = {
   //@ts-ignore
   page: undefined as Page,
@@ -14,4 +16,6 @@ export const pageFixture = {
   deletingToDos: undefined as DeletingToDosPage,
   //@ts-ignore
   editingToDos: undefined as EditingToDosPage,
+  //@ts-ignore
+  markingTodos: undefined as MarkingTodosPage,
 };

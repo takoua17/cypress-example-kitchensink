@@ -27,3 +27,6 @@ npm install --save-dev allure-cucumberjs allure-commandline
 - npm run test:dry : check that every Gherkin step has a matching stepdef
 - npm run report:generate : turn the test results (.json) into an HTML report
 - npm run report:open : open that report in your browser
+
+
+

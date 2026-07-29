@@ -1,3 +1,4 @@
+
 import { Given, Then, When } from "@cucumber/cucumber";
 
 import { pageFixture } from "../support/pageFixture";
@@ -15,6 +16,8 @@ Given("I am ready to delete todos", async function () {
   pageFixture.deletingToDos = new DeletingToDosPage(pageFixture.page);
 });
 
+
+//************TC-10: delete a single to-do item by clicking the delete button
 When("I hover over the todo item {string}", async function (todoItem) {
   // Hover over the todo item
   await pageFixture.deletingToDos.hoverOverTodoItem();
@@ -44,6 +47,8 @@ Then("the footer should be hidden", async function () {
   await expect(pageFixture.deletingToDos.footerFilter).not.toBeVisible();
 });
 
+
+//TC-11:  A todo should not be deleted by clearing its text and pressing Enter 
 // Double-click on the todo item to enter edit mode
 When("I double-click on the todo to enter edit mode", async function () {
   await pageFixture.deletingToDos.doubleClickTodoItem();
@@ -54,7 +59,12 @@ When("I clear all the text", async function () {
   await pageFixture.deletingToDos.clearTodoItemText();
 });
 
-When("I hover over the todo {string}", async function (todoText: string) {
-  await pageFixture.deletingToDos.hoverOverSpecificTodo(todoText); 
-});
+//************TC-12:  A todo should not be deleted when the edit field is cleared and blurred 
+// No new steps needed here : reuses steps already defined above,
 
+
+//************TC-13: Delete a specific todo from multiple todos (by the delete button)
+// Hover over a specific todo item, identified by its text
+When("I hover over the todo {string}", async function (todoText: string) {
+  await pageFixture.deletingToDos.hoverOverSpecificTodo(todoText);
+});

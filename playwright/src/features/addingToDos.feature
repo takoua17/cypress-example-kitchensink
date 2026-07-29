@@ -40,8 +40,8 @@ as a user i want to add todos to the list
     And the input field is empty
     And the todo counter should show "2"
 
-  @AddingEmptyTodos
-  Scenario: Attempt to add an empty todo
+  @DoNotAddEmptytodo
+  Scenario: A todo should not be added when the input field is empty
     When I click on the input field
     And I press Enter
     Then no todo should be added to the list

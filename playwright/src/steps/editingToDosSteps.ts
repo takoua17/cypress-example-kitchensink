@@ -6,13 +6,17 @@ import { DeletingToDosPage } from "../pages/deletingToDosPage";
 
 let EditingToDos: EditingToDosPage;
 
+/* Create a new instance of EditingToDosPage and store it in pageFixture.
+Also instantiate DeletingToDosPage and store it in pageFixture.deletingToDos,
+since some steps used here (double-click, clear text) are defined in 
+deletingToDosSteps.ts and rely on that instance.
+*/
 Given("I am ready to edit todos", async function () {
   pageFixture.editingToDos = new EditingToDosPage(pageFixture.page);
-
-  // Also instantiate deletingToDos and stor it in pageFixture.editingToDos
-  //since some steps used here(double-click, clear text) are defined in deletingToDosSteps.ts
   pageFixture.deletingToDos = new DeletingToDosPage(pageFixture.page);
 });
+
+// //***********TC-14: Cancel editing a todo by pressing escape
 
 // Type the new text into the edit input field
 When("I edit the text to {string}", async function (newEditText: string) {
@@ -27,6 +31,7 @@ When("I press Escape", async function () {
   await pageFixture.editingToDos.pressEscape();
 });
 
+//***********TC-15:Edit a todo by double-clicking and confirm with Enter
 // Verify that the edit textbox is visible with the expected text
 Then(
   "the textbox should be visible with {string}",
@@ -35,17 +40,17 @@ Then(
   },
 );
 
-//Type the new text into the edit input field (used before confirming with Enter)
+// Type the new text into the edit input field (used before confirming with Enter)
 When("I change the text to {string}", async function (newText: string) {
   await pageFixture.editingToDos.editText(newText);
 });
 
-/// Press Enter on the edit input field to confirm the edit
+// Press Enter on the edit input field to confirm the edit
 When("I confirm the edit by pressing Enter", async function () {
   await pageFixture.editingToDos.pressEnter();
 });
 
-/// Verify that the todo with the updated text now appears in the list
+// Verify that the todo with the updated text now appears in the list
 Then(
   "the new todo {string} should be visible",
   async function (todoText: string) {
@@ -55,3 +60,6 @@ Then(
     expect(found).toBeGreaterThan(0);
   },
 );
+
+//***********TC-16: Save edit when clicking outside the input (blur) with new text
+//No new steps needed here : reuses steps already defined above
